@@ -1,20 +1,16 @@
-package com.example.coursework2middle;
+package com.example.coursework2middle.repository;
 
 import com.example.coursework2middle.essences.Question;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
-
-public interface QuestionService {
-
+@Repository
+public interface QuestionRepository {
     Question add(String question, String answer);
-
-    Question find(Question question);
 
     Question remove(Question question);
 
     Collection<Question> getAll();
-
-    Question getRandomQuestion();
-
 
 }

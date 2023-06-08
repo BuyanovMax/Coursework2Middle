@@ -1,4 +1,4 @@
-package com.example.coursework2middle;
+package com.example.coursework2middle.essences;
 
 import java.util.Objects;
 

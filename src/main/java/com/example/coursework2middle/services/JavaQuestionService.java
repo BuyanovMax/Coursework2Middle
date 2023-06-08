@@ -1,9 +1,11 @@
 package com.example.coursework2middle.services;
 
 
-import com.example.coursework2middle.Question;
+import com.example.coursework2middle.essences.JavaQuestionsRepository;
+import com.example.coursework2middle.essences.Question;
 import com.example.coursework2middle.QuestionService;
 import com.example.coursework2middle.exceptions.QuestionNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,42 +13,40 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Component
 public class JavaQuestionService implements QuestionService {
 
-    Set<Question> questions = new HashSet<>();
     Random random = new Random();
+    private final JavaQuestionsRepository javaQuestionsRepository;
 
-
-    @Override
-    public Question add(String question, String answer) {
-        Question question1 = new Question(question,answer);
-        questions.add(question1);
-        return question1;
+    public JavaQuestionService(JavaQuestionsRepository javaQuestionsRepository) {
+        this.javaQuestionsRepository = javaQuestionsRepository;
     }
 
     @Override
-    public Question add(Question question) {
-        return null;
+    public Question add(String question, String answer) {
+        return javaQuestionsRepository.add(question, answer);
+    }
+
+    @Override
+    public Question find(Question question) {
+        return javaQuestionsRepository.find(question);
     }
 
     @Override
     public Question remove(Question question) {
-        if (questions.contains(question)) {
-            questions.remove(question);
-            return question;
-        }
-        throw new QuestionNotFoundException("Question not found");
+        return javaQuestionsRepository.remove(question);
     }
 
     @Override
     public Collection<Question> getAll() {
-        return questions.stream().collect(Collectors.toList());
+        return javaQuestionsRepository.getAll();
     }
 
     @Override
     public Question getRandomQuestion() {
-       List<Question> list =  questions.stream().collect(Collectors.toList());
-        int a = random.nextInt(0, questions.size());
+       List<Question> list =  javaQuestionsRepository.getAll().stream().collect(Collectors.toList());
+        int a = random.nextInt(0, javaQuestionsRepository.getAll().size());
         return list.get(a);
     }
 
